@@ -44,7 +44,9 @@ const TIER1_OILS = [
   // 福壽 (Fuso) branded
   { id: "oil_fs25", name: "福壽大豆沙拉油 3 公升裝", brand: "福壽", status: "下架回收", category: "大豆沙拉油", capacity: "3L 塑桶", batchNumber: "C1160426K", testResult: "原料油向中聯購買精煉，苯駢芘檢出超標" },
   { id: "oil_fs26", name: "福壽大豆沙拉油 18 公升裝", brand: "福壽", status: "下架回收", category: "大豆沙拉油", capacity: "18L 鐵桶", batchNumber: "C2150426O、C2150426P、C2160426O、C2160426P", testResult: "向中聯進貨大豆油精煉，檢出致癌物苯駢芘 2.5 μg/kg" },
-  { id: "oil_fs27", name: "福壽健味香油 3 公升裝", brand: "福壽", status: "下架回收", category: "香油", capacity: "3L 塑桶", batchNumber: "BL150426L", testResult: "調配油品基底大豆油混入中聯問題超標原料" }
+  { id: "oil_fs27", name: "福壽健味香油 3 公升裝", brand: "福壽", status: "下架回收", category: "香油", capacity: "3L 塑桶", batchNumber: "BL150426L", testResult: "調配油品基底大豆油混入中聯問題超標原料" },
+  { id: "oil_fs28", name: "福壽花生風味精華調合油 2L", brand: "福壽", status: "下架回收", category: "調合油", capacity: "2L", batchNumber: "BL130426F", testResult: "使用中聯第4批超標原料，檢出苯駢芘 4.3 ppb" },
+  { id: "oil_fs29", name: "福壽不飽和大豆沙拉油 2L", brand: "福壽", status: "下架回收", category: "大豆沙拉油", capacity: "2L", batchNumber: "C1160426A", testResult: "使用中聯第5批超標原料，檢出苯駢芘 3.8 ppb" }
 ];
 
 import { TIER3_FOODS } from "../tier3Data";

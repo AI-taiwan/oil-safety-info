@@ -33,6 +33,11 @@ export default function InspectionChecker() {
     return a.brand.localeCompare(b.brand);
   });
 
+  // Stats calculation
+  const totalPassed = inspectionData.filter(r => r.status === "passed").length;
+  const totalFailed = inspectionData.filter(r => r.status === "failed").length;
+  const totalPending = inspectionData.filter(r => r.status === "pending").length;
+
   return (
     <div className="space-y-6" id="checker-root">
       {/* Intro Stats Bar */}
@@ -42,7 +47,7 @@ export default function InspectionChecker() {
             <ShieldCheck className="w-7 h-7" />
           </div>
           <div>
-            <div className="text-3xl font-black text-emerald-400 tracking-tight">7 款</div>
+            <div className="text-3xl font-black text-emerald-400 tracking-tight">{totalPassed} 款</div>
             <div className="text-xs text-emerald-500 font-bold mt-1">首波抽檢完全合格產品</div>
           </div>
         </motion.div>
@@ -53,7 +58,7 @@ export default function InspectionChecker() {
             <ShieldAlert className="w-7 h-7 animate-pulse" />
           </div>
           <div className="relative z-10">
-            <div className="text-3xl font-black text-red-400 tracking-tight">4 款</div>
+            <div className="text-3xl font-black text-red-400 tracking-tight">{totalFailed} 款</div>
             <div className="text-xs text-red-400 font-bold mt-1">檢出致癌物超標產品 (苯駢芘 &gt; 2.0)</div>
           </div>
         </motion.div>
@@ -63,7 +68,7 @@ export default function InspectionChecker() {
             <HelpCircle className="w-7 h-7" />
           </div>
           <div>
-            <div className="text-3xl font-black text-amber-400 tracking-tight">2 款</div>
+            <div className="text-3xl font-black text-amber-400 tracking-tight">{totalPending} 款</div>
             <div className="text-xs text-amber-500 font-bold mt-1">預防性下架送驗中產品</div>
           </div>
         </motion.div>
