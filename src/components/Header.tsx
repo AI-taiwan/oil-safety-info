@@ -20,9 +20,9 @@ export default function Header({ activeTab, setActiveTab }: HeaderProps) {
     <header className="bg-[#0b0f19]/80 backdrop-blur-md border-b border-slate-800/80 sticky top-0 z-50 shadow-lg shadow-slate-950/40" id="header-root">
       {/* Emergency Top Banner */}
       <div className="bg-gradient-to-r from-red-600 via-red-500 to-rose-600 text-white text-xs sm:text-sm py-2.5 px-4 font-medium flex items-center justify-center shadow-inner" id="emergency-banner">
-        <div className="flex items-center gap-2 max-w-7xl">
-          <ShieldAlert className="w-4.5 h-4.5 animate-pulse flex-shrink-0" />
-          <span className="truncate">
+        <div className="flex items-center gap-2 max-w-7xl w-full min-w-0">
+          <ShieldAlert className="w-5 h-5 animate-pulse flex-shrink-0" />
+          <span className="leading-relaxed">
             <strong>緊急警報：</strong>政府已勒令「康健食品」、「廚神牌」、「御品膳」部分致癌物苯駢芘超標之沙拉油與調和油下架回收，請民眾立即停用！
           </span>
         </div>
@@ -45,7 +45,7 @@ export default function Header({ activeTab, setActiveTab }: HeaderProps) {
         </div>
 
         {/* Navigation Tabs */}
-        <nav className="flex flex-wrap gap-1.5 md:border-none pb-2 xl:pb-0" id="nav-tabs">
+        <nav className="flex overflow-x-auto hide-scrollbar xl:justify-end gap-2 md:border-none pb-2 xl:pb-0 px-2 sm:px-0" id="nav-tabs">
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
@@ -56,7 +56,7 @@ export default function Header({ activeTab, setActiveTab }: HeaderProps) {
                 key={tab.id}
                 id={`tab-btn-${tab.id}`}
                 onClick={() => setActiveTab(tab.id)}
-                className={`relative flex items-center gap-1.5 px-3.5 py-2.5 text-xs sm:text-sm font-bold rounded-xl transition-all duration-300 cursor-pointer overflow-hidden ${
+                className={`relative flex items-center justify-center shrink-0 gap-1.5 px-4 py-2.5 text-xs sm:text-sm font-bold rounded-xl transition-all duration-300 cursor-pointer overflow-hidden whitespace-nowrap ${
                   isActive 
                     ? "text-white shadow-lg" 
                     : isMerchants 

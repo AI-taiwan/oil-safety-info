@@ -861,16 +861,16 @@ export default function LocalMerchants({ onTraceInSupply }: LocalMerchantsProps 
           </div>
 
           {paginatedMerchants.length > 0 ? (
-            <div className="overflow-x-auto" id="merchants-table-wrapper">
-              <table className="w-full text-left border-collapse" id="merchants-table">
+            <div className="overflow-x-auto hide-scrollbar" id="merchants-table-wrapper">
+              <table className="w-full text-left border-collapse min-w-[900px]" id="merchants-table">
                 <thead>
                   <tr className="bg-slate-950/60 border-b border-slate-800 text-slate-200 text-xs font-bold uppercase">
-                    <th className="py-3.5 px-6 text-center w-16">序號</th>
-                    <th className="py-3.5 px-6 w-28">縣市</th>
-                    <th className="py-3.5 px-6">業者 / 商家名稱</th>
-                    <th className="py-3.5 px-6">進貨問題油品與規格</th>
-                    <th className="py-3.5 px-6 w-32">來源品牌</th>
-                    <th className="py-3.5 px-6 w-52 text-center">聯動與流向追蹤</th>
+                    <th className="py-3.5 px-4 text-center w-16 whitespace-nowrap">序號</th>
+                    <th className="py-3.5 px-4 w-24 whitespace-nowrap">縣市</th>
+                    <th className="py-3.5 px-4 min-w-[250px]">業者 / 商家名稱</th>
+                    <th className="py-3.5 px-4 min-w-[200px]">進貨問題油品與規格</th>
+                    <th className="py-3.5 px-4 w-28 whitespace-nowrap">來源品牌</th>
+                    <th className="py-3.5 px-4 w-48 text-center whitespace-nowrap">聯動與流向追蹤</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-800/60 text-sm">

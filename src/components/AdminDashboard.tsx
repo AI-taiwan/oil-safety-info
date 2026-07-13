@@ -84,7 +84,7 @@ export default function AdminDashboard() {
 
   if (!isAuthenticated) {
     return (
-      <div className="max-w-md mx-auto mt-10 p-6 bg-[#0b0f19] border border-slate-800 rounded-2xl shadow-xl">
+      <div className="w-full max-w-md mx-auto mt-10 p-6 bg-[#0b0f19] border border-slate-800 rounded-2xl shadow-xl">
         <div className="flex flex-col items-center gap-3 mb-6">
           <div className="bg-slate-900 p-3 rounded-full border border-slate-800">
             <Lock className="w-6 h-6 text-slate-400" />
