@@ -10,7 +10,6 @@ import ErrorReportModal from "./components/ErrorReportModal";
 import AdminDashboard from "./components/AdminDashboard";
 import { ShieldCheck, Info, FileText, AlertCircle, MessageSquareWarning, Settings } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
-import { Analytics } from '@vercel/analytics/react';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<string>("news");
@@ -24,7 +23,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#070b14] flex flex-col font-sans text-slate-100 relative" id="app-root">
-      <Analytics />
       {/* Top Main Navigation Header */}
       <Header activeTab={activeTab} setActiveTab={setActiveTab} />
 

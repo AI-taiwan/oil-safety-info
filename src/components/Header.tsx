@@ -20,22 +20,22 @@ export default function Header({ activeTab, setActiveTab }: HeaderProps) {
     <header className="bg-[#0b0f19]/80 backdrop-blur-md border-b border-slate-800/80 sticky top-0 z-50 shadow-lg shadow-slate-950/40" id="header-root">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col xl:flex-row xl:items-center xl:justify-between gap-6" id="header-content">
         {/* Brand Logo & Title */}
-        <div className="flex items-center gap-3" id="brand-container">
-          <div className="bg-gradient-to-br from-red-900/60 to-rose-950/40 text-red-400 p-2.5 rounded-xl border border-red-800/50 shadow-inner" id="brand-logo">
+        <div className="flex items-center gap-3 min-w-0" id="brand-container">
+          <div className="bg-gradient-to-br from-red-900/60 to-rose-950/40 text-red-400 p-2.5 rounded-xl border border-red-800/50 shadow-inner shrink-0" id="brand-logo">
             <Biohazard className="w-7 h-7 animate-pulse drop-shadow-[0_0_8px_rgba(248,113,113,0.5)]" />
           </div>
-          <div>
-            <h1 className="text-xl sm:text-2xl font-black text-white tracking-tight drop-shadow-sm" id="brand-title">
+          <div className="min-w-0">
+            <h1 className="text-xl sm:text-2xl font-black text-white tracking-tight drop-shadow-sm truncate" id="brand-title">
               毒油事件 一站式平台
             </h1>
-            <p className="text-xs text-slate-400 mt-1 font-medium" id="brand-subtitle">
+            <p className="text-xs text-slate-400 mt-1 font-medium truncate" id="brand-subtitle">
               全民食安衛士：即時掌握受污染油品流向、檢驗數據與健康指引
             </p>
           </div>
         </div>
 
         {/* Navigation Tabs */}
-        <nav className="flex overflow-x-auto hide-scrollbar xl:justify-end gap-2 md:border-none pb-2 xl:pb-0 px-2 sm:px-0" id="nav-tabs">
+        <nav className="flex overflow-x-auto hide-scrollbar xl:justify-end gap-2 md:border-none pb-2 xl:pb-0 px-2 sm:px-0 flex-1 min-w-0" id="nav-tabs">
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
