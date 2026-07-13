@@ -126,7 +126,7 @@ export default function App() {
           </div>
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 pt-6 border-t border-slate-800/40 text-center text-[10px] text-slate-500" id="footer-copyright">
-          © 2026 全民食安防衛聯網 &bull; 守護健康，從嚴格把關每一滴油開始。
+          © 2026 食品安全 人人有責
         </div>
       </footer>
     </div>
