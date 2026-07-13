@@ -1,4 +1,4 @@
-import { ShieldAlert, Info, HelpCircle, MapPin, MessageSquare, Settings } from "lucide-react";
+import { ShieldAlert, Info, HelpCircle, MapPin, MessageSquare, Settings, Biohazard } from "lucide-react";
 import { motion } from "motion/react";
 
 interface HeaderProps {
@@ -18,25 +18,15 @@ export default function Header({ activeTab, setActiveTab }: HeaderProps) {
 
   return (
     <header className="bg-[#0b0f19]/80 backdrop-blur-md border-b border-slate-800/80 sticky top-0 z-50 shadow-lg shadow-slate-950/40" id="header-root">
-      {/* Emergency Top Banner */}
-      <div className="bg-gradient-to-r from-red-600 via-red-500 to-rose-600 text-white text-xs sm:text-sm py-2.5 px-4 font-medium flex items-center justify-center shadow-inner" id="emergency-banner">
-        <div className="flex items-center gap-2 max-w-7xl w-full min-w-0">
-          <ShieldAlert className="w-5 h-5 animate-pulse flex-shrink-0" />
-          <span className="leading-relaxed">
-            <strong>緊急警報：</strong>政府已勒令「康健食品」、「廚神牌」、「御品膳」部分致癌物苯駢芘超標之沙拉油與調和油下架回收，請民眾立即停用！
-          </span>
-        </div>
-      </div>
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col xl:flex-row xl:items-center xl:justify-between gap-6" id="header-content">
         {/* Brand Logo & Title */}
         <div className="flex items-center gap-3" id="brand-container">
           <div className="bg-gradient-to-br from-red-900/60 to-rose-950/40 text-red-400 p-2.5 rounded-xl border border-red-800/50 shadow-inner" id="brand-logo">
-            <ShieldAlert className="w-7 h-7 animate-pulse drop-shadow-[0_0_8px_rgba(248,113,113,0.5)]" />
+            <Biohazard className="w-7 h-7 animate-pulse drop-shadow-[0_0_8px_rgba(248,113,113,0.5)]" />
           </div>
           <div>
             <h1 className="text-xl sm:text-2xl font-black text-white tracking-tight drop-shadow-sm" id="brand-title">
-              致癌沙拉油事件資訊平台
+              毒油事件 一站式平台
             </h1>
             <p className="text-xs text-slate-400 mt-1 font-medium" id="brand-subtitle">
               全民食安衛士：即時掌握受污染油品流向、檢驗數據與健康指引

@@ -1,15 +1,26 @@
-import { useState } from "react";
-import { newsData } from "../data";
+import { useState, useEffect } from "react";
+import { newsData as initialNewsData } from "../data";
 import { NewsItem } from "../types";
 import { AlertCircle, Calendar, ExternalLink, Filter } from "lucide-react";
 import { motion } from "motion/react";
 
 export default function NewsSection() {
   const [selectedCategory, setSelectedCategory] = useState<string>("全部");
+  const [newsList, setNewsList] = useState<NewsItem[]>(initialNewsData);
+
+  useEffect(() => {
+    // Load custom news from localStorage and merge with hardcoded initialNewsData
+    const data = localStorage.getItem("customNews");
+    if (data) {
+      const parsedCustomNews: NewsItem[] = JSON.parse(data);
+      // Combine custom news (at top) with initial news
+      setNewsList([...parsedCustomNews, ...initialNewsData]);
+    }
+  }, []);
 
   const categories = ["全部", "政府公告", "廠商回收", "健康指引", "檢驗進度"];
 
-  const filteredNews = newsData.filter((item) => {
+  const filteredNews = newsList.filter((item) => {
     if (selectedCategory === "全部") return true;
     return item.category === selectedCategory;
   });
