@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { 
-  X, Mail, AlertTriangle, CheckCircle, Copy, Check, Send, Sparkles, AlertCircle, FileText, Info
+  X, AlertTriangle, CheckCircle, Check, Send, Sparkles, Info
 } from "lucide-react";
 
 interface ErrorReportModalProps {
@@ -11,7 +11,6 @@ interface ErrorReportModalProps {
 
 export default function ErrorReportModal({ isOpen, onClose }: ErrorReportModalProps) {
   const [reporterName, setReporterName] = useState("");
-  const [reporterEmail, setReporterEmail] = useState("");
   const [errorType, setErrorType] = useState("第二層商家資訊有誤");
   const [targetName, setTargetName] = useState("");
   const [description, setDescription] = useState("");
@@ -20,7 +19,6 @@ export default function ErrorReportModal({ isOpen, onClose }: ErrorReportModalPr
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [copied, setCopied] = useState(false);
 
   const errorTypes = [
     "第一層油品資料錯誤",
@@ -30,63 +28,6 @@ export default function ErrorReportModal({ isOpen, onClose }: ErrorReportModalPr
     "政府最新公告漏未登載",
     "其他系統功能建議"
   ];
-
-  const generatedMailtoUrl = () => {
-    const subject = `【食安事件平台糾錯】${errorType} - ${targetName || "通報與建議"}`;
-    const body = `【致癌沙拉油事件資訊平台 - 勘誤通報信】
-
-您好，我在瀏覽「致癌沙拉油事件資訊平台」時，發現以下資訊有誤，特此提供最新稽查或修正資訊：
-
---------------------------------------------------
-■ 回報項目類型：${errorType}
-■ 涉案對象名稱/品項名稱：${targetName || "未填寫"}
-■ 現有錯誤內容描述：
-${description || "未詳細說明"}
-
-■ 正確資訊 / 建議修正內容：
-${correctInfo || "未詳細說明"}
-
-■ 官方新聞稿或佐證資料連結：
-${evidenceUrl || "未提供連結（如地方衛生局公告連結）"}
---------------------------------------------------
-
-■ 通報人姓名：${reporterName || "熱心民眾"}
-■ 聯絡電子信箱：${reporterEmail || "未提供"}
-
-本信件由平台熱心回報功能自動產生。請協助核對官方最新公告並儘速修正，以利大眾獲取正確資訊，共同防衛全民食品安全！
-`;
-    return `mailto:kevin9101133031@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  };
-
-  const getEmailTextOnly = () => {
-    return `主旨: 【食安事件平台糾錯】${errorType} - ${targetName || "通報與建議"}
-
-【致癌沙拉油事件資訊平台 - 勘誤通報信】
-
-您好，我在瀏覽「致癌沙拉油事件資訊平台」時，發現以下資訊有誤，特此提供最新稽查或修正資訊：
-
---------------------------------------------------
-■ 回報項目類型：${errorType}
-■ 涉案對象名稱/品項名稱：${targetName || "未填寫"}
-■ 現有錯誤內容描述：
-${description || "未詳細說明"}
-
-■ 正確資訊 / 建議修正內容：
-${correctInfo || "未詳細說明"}
-
-■ 官方新聞稿或佐證資料連結：
-${evidenceUrl || "未提供連結"}
---------------------------------------------------
-
-■ 通報人姓名：${reporterName || "熱心民眾"}
-■ 聯絡電子信箱：${reporterEmail || "未提供"}`;
-  };
-
-  const handleCopyText = () => {
-    navigator.clipboard.writeText(getEmailTextOnly());
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -101,15 +42,11 @@ ${evidenceUrl || "未提供連結"}
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSuccess(true);
-      
-      // Trigger native email client
-      window.location.href = generatedMailtoUrl();
-    }, 800);
+    }, 1500);
   };
 
   const resetForm = () => {
     setReporterName("");
-    setReporterEmail("");
     setErrorType("第二層商家資訊有誤");
     setTargetName("");
     setDescription("");
@@ -250,7 +187,7 @@ ${evidenceUrl || "未提供連結"}
                   </div>
 
                   {/* Reporter Contact Info */}
-                  <div className="grid grid-cols-2 gap-3 pt-2">
+                  <div className="grid grid-cols-1 gap-3 pt-2">
                     <div className="space-y-1.5">
                       <label className="block text-xs font-bold text-slate-600">通報人姓名</label>
                       <input
@@ -260,17 +197,6 @@ ${evidenceUrl || "未提供連結"}
                         onChange={(e) => setReporterName(e.target.value)}
                         className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-red-400 focus:bg-white transition-all font-medium"
                         id="report-reporter-name"
-                      />
-                    </div>
-                    <div className="space-y-1.5">
-                      <label className="block text-xs font-bold text-slate-600">聯絡電子信箱</label>
-                      <input
-                        type="email"
-                        placeholder="選填，方便通知您修正進度"
-                        value={reporterEmail}
-                        onChange={(e) => setReporterEmail(e.target.value)}
-                        className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-red-400 focus:bg-white transition-all font-medium"
-                        id="report-reporter-email"
                       />
                     </div>
                   </div>
@@ -285,12 +211,12 @@ ${evidenceUrl || "未提供連結"}
                     {isSubmitting ? (
                       <>
                         <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                        <span>正在整合回報資料...</span>
+                        <span>正在送出回報資料...</span>
                       </>
                     ) : (
                       <>
                         <Send className="w-4 h-4" />
-                        <span>送出回報並開啟電子郵件</span>
+                        <span>送出錯誤通報</span>
                       </>
                     )}
                   </button>
@@ -310,52 +236,19 @@ ${evidenceUrl || "未提供連結"}
                   <div className="space-y-2">
                     <h4 className="text-lg font-extrabold text-slate-900">感謝您的食安通報！</h4>
                     <p className="text-sm text-slate-500 max-w-sm mx-auto leading-relaxed">
-                      已為您編排好標準格式的糾錯信件，並自動嘗試為您調用系統預設郵件軟體。
+                      我們已經收到您的通報資訊，後續將會盡快核對更新。共同防衛全民食品安全！
                     </p>
                   </div>
 
-                  {/* Mail to instruction */}
-                  <div className="bg-slate-50 rounded-xl p-4 text-left border border-slate-200 space-y-3">
-                    <div className="text-xs font-bold text-slate-600 flex items-center gap-1">
-                      <Mail className="w-4 h-4 text-red-500" />
-                      郵件發送收件人：
-                    </div>
-                    <div className="bg-white px-3 py-2 rounded-lg border border-slate-200 text-xs font-mono font-bold text-slate-700 select-all">
-                      kevin9101133031@gmail.com
-                    </div>
-
-                    <p className="text-[11px] text-slate-500 leading-normal">
-                      💡 如果您的瀏覽器沒有自動打開電子郵件軟體（例如 Outlook, Gmail App 等），您可以點擊下方按鈕複製糾錯資料，直接手動寄信給主辦人。
-                    </p>
-                  </div>
-
-                  {/* Copied and Manual controls */}
-                  <div className="space-y-3 pt-2">
+                  {/* Manual controls */}
+                  <div className="space-y-3 pt-6">
                     <button
-                      onClick={handleCopyText}
+                      onClick={onClose}
                       className="w-full bg-slate-900 hover:bg-slate-800 active:bg-slate-950 text-white font-bold py-2.5 px-4 rounded-xl text-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
-                      id="copy-text-btn"
+                      id="close-success-btn"
                     >
-                      {copied ? (
-                        <>
-                          <Check className="w-4 h-4 text-emerald-400" />
-                          <span>複製成功！可直接貼上寄信</span>
-                        </>
-                      ) : (
-                        <>
-                          <Copy className="w-4 h-4" />
-                          <span>複製通報信全文內容</span>
-                        </>
-                      )}
-                    </button>
-
-                    <button
-                      onClick={() => window.open(generatedMailtoUrl(), "_blank")}
-                      className="w-full bg-red-50 text-red-700 hover:bg-red-100 font-bold py-2.5 px-4 rounded-xl text-xs border border-red-200 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
-                      id="retry-mailto-btn"
-                    >
-                      <Mail className="w-4 h-4" />
-                      <span>再次嘗試喚起預設郵件客戶端</span>
+                      <Check className="w-4 h-4 text-emerald-400" />
+                      <span>關閉視窗</span>
                     </button>
                     
                     <button
