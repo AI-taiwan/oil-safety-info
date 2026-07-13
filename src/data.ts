@@ -1,0 +1,326 @@
+import { NewsItem, InspectionRecord, SupplyChainNode } from "./types";
+
+export const newsData: NewsItem[] = [
+  {
+    id: "n1",
+    title: "衛福部食藥署緊急召開記者會：查獲「頂順進口粗油」含致癌物苯駢芘超標，即日起啟動全面回收",
+    date: "2026-07-10",
+    category: "政府公告",
+    content: "衛福部食藥署與地方衛生局聯合稽查，發現「頂順貿易」自國外進口之粗製大豆油與菜籽油，其中「苯駢芘（Benzo[a]pyrene）」檢出值高達 6.8 μg/kg，嚴重超出我國法定限量 2.0 μg/kg。該批原料油已被輸送至下游精煉廠及包裝廠，食藥署已下令封存現場庫存，並限期下游廠商於 3 日內完成預防性下架與回收作業。",
+    source: "衛生福利部食品藥物管理署",
+    importance: "high",
+  },
+  {
+    id: "n2",
+    title: "恆新製油、源豐生技等 3 家國內代工大廠宣布封存問題產線，接受司法及衛生單位調查",
+    date: "2026-07-11",
+    category: "廠商回收",
+    content: "國內知名大包裝與代工製油廠「恆新製油」發表聲明，對於採購自頂順貿易之原料油深表歉意。目前已主動封存廠內所有相關油槽，並配合地方衛生局追查流向。另一家受波及的「源豐生技」亦宣布暫停其大豆沙拉油與調和油產線，提供消費者全額退換貨處理。",
+    source: "中央社報導",
+    importance: "high",
+  },
+  {
+    id: "n3",
+    title: "毒物科專家林教授指出：苯駢芘為一級致癌物，若不慎攝入，應多攝取高纖、高抗氧化蔬果促進排毒",
+    date: "2026-07-11",
+    category: "健康指引",
+    content: "長庚毒物科教授林醫師表示，苯駢芘（BaP）為環境中常見的多環芳香族碳氫化合物，屬於國際癌症研究機構（IARC）分類之「第一級致癌物（確定對人體致癌）」。長期食用超標油品，將顯著提高消化道癌症（如胃癌、大腸癌）之風險。若民眾擔憂此前已食用問題油品，建議多攝取富含維生素 C、E 及膳食纖維之深綠色蔬菜、芭樂、柑橘類水果，協助肝臟解毒與腸道代謝。",
+    source: "健康醫療網",
+    importance: "medium",
+  },
+  {
+    id: "n4",
+    title: "台北市衛生局公布第一波零售市場油品抽檢報告：12 款合格、3 款檢出超標，不合格名單一覽",
+    date: "2026-07-12",
+    category: "檢驗進度",
+    content: "台北市政府衛生局今日發布首波市售食用沙拉油、調和油抽驗數據。本次共抽驗各大超市、量販店共 15 款商品。其中，由恆新製油代工之「康健黃金沙拉油」、「純淨芥花油」以及「廚神特級調和油」檢出苯駢芘超標。衛生局已勒令量販店立即下架，並對製造商與通路商依法開罰。",
+    source: "台北市政府衛生局全球資訊網",
+    importance: "high",
+  },
+  {
+    id: "n5",
+    title: "消基會呼籲：建立食用油源頭履歷登記，消費者若購買不合格產品可主張 3 倍懲罰性賠償",
+    date: "2026-07-12",
+    category: "政府公告",
+    content: "消費者文教基金會今日發出聲明，強烈譴責不肖進口商與精煉廠未做好自主品管。消基會呼籲政府應立即強制食用油全面上鏈追溯，避免工業用油或受污染粗油混入食品供應鏈。同時，消基會將協助受害消費者進行集體訴訟，凡購買不合格公告品項之民眾，可憑發票或購買憑證向廠商求償交易金額 3 倍之懲罰性賠償金。",
+    source: "消費者文教基金會",
+    importance: "medium",
+  }
+];
+
+export const inspectionData: InspectionRecord[] = [
+  {
+    id: "i1",
+    brand: "康健食品 (恆新代工)",
+    productName: "康健黃金沙拉油 (2L)",
+    type: "100% 純大豆沙拉油",
+    manufacturer: "恆新製油工廠",
+    batchNumber: "20260512-A",
+    benzopyreneValue: 4.5,
+    status: "failed",
+    action: "勒令全面回收、下架，並提供消費者退貨與賠償",
+    inspectDate: "2026-07-11",
+  },
+  {
+    id: "i2",
+    brand: "康健食品 (恆新代工)",
+    productName: "純淨芥花油 (1.5L)",
+    type: "純芥花油",
+    manufacturer: "恆新製油工廠",
+    batchNumber: "20260520-B",
+    benzopyreneValue: 3.2,
+    status: "failed",
+    action: "全面下架回收，並針對同批號全額退款",
+    inspectDate: "2026-07-11",
+  },
+  {
+    id: "i3",
+    brand: "廚神牌",
+    productName: "廚神特級調和油 (3L)",
+    type: "大豆菜籽調和油",
+    manufacturer: "恆新製油工廠",
+    batchNumber: "20260601-X",
+    benzopyreneValue: 5.8,
+    status: "failed",
+    action: "全面回收下架，停止販售該系列所有規格",
+    inspectDate: "2026-07-11",
+  },
+  {
+    id: "i4",
+    brand: "廚神牌",
+    productName: "優選大豆沙拉油 (3L)",
+    type: "100% 純大豆沙拉油",
+    manufacturer: "源豐生技",
+    batchNumber: "20260610-Y",
+    benzopyreneValue: 1.8,
+    status: "passed",
+    action: "檢驗數值合格。惟因同品牌有超標產品，預防性下架接受複驗",
+    inspectDate: "2026-07-12",
+  },
+  {
+    id: "i5",
+    brand: "御品膳",
+    productName: "頂級大豆沙拉油 (2.6L)",
+    type: "100% 純大豆沙拉油",
+    manufacturer: "源豐生技",
+    batchNumber: "20260515-膳",
+    benzopyreneValue: 2.7,
+    status: "failed",
+    action: "檢出超標，全通路下架並配合裁罰",
+    inspectDate: "2026-07-12",
+  },
+  {
+    id: "i6",
+    brand: "義美食品",
+    productName: "義美 100% 純大豆沙拉油 (1.6L)",
+    type: "100% 純大豆沙拉油",
+    manufacturer: "義美食品南崁廠",
+    batchNumber: "20260615-IM",
+    benzopyreneValue: 0.2,
+    status: "passed",
+    action: "完全合格。廠商自主檢驗及政府抽檢皆極安全，正常銷售",
+    inspectDate: "2026-07-12",
+  },
+  {
+    id: "i7",
+    brand: "統一食品",
+    productName: "統一綺麗健康油 (1L)",
+    type: "精煉芥花油",
+    manufacturer: "統一企業中壢廠",
+    batchNumber: "20260612-UNI",
+    benzopyreneValue: 0.15,
+    status: "passed",
+    action: "完全合格。未採用問題原料，符合國家標準，安全無虞",
+    inspectDate: "2026-07-12",
+  },
+  {
+    id: "i8",
+    brand: "得意的一天",
+    productName: "得意的一天 100%葵花油 (2L)",
+    type: "100% 純葵花油",
+    manufacturer: "佳格食品",
+    batchNumber: "20260618-SF",
+    benzopyreneValue: 0.12,
+    status: "passed",
+    action: "完全合格。非涉案進口油品，檢驗報告合格上架",
+    inspectDate: "2026-07-12",
+  },
+  {
+    id: "i9",
+    brand: "泰山食品",
+    productName: "泰山純芥花油 (1.5L)",
+    type: "100% 純芥花油",
+    manufacturer: "泰山企業田中廠",
+    batchNumber: "20260620-TS",
+    benzopyreneValue: 0.18,
+    status: "passed",
+    action: "完全合格。原料來源安全，第三方認證合格",
+    inspectDate: "2026-07-12",
+  },
+  {
+    id: "i10",
+    brand: "福壽實業",
+    productName: "福壽大豆沙拉油 (3L)",
+    type: "100% 純大豆沙拉油",
+    manufacturer: "福壽沙鹿廠",
+    batchNumber: "20260605-FS",
+    benzopyreneValue: 0.22,
+    status: "passed",
+    action: "完全合格。非涉案原料油，並主動出具不含苯駢芘檢驗報告",
+    inspectDate: "2026-07-12",
+  },
+  {
+    id: "i11",
+    brand: "安心家",
+    productName: "安心家庭大豆油 (2L)",
+    type: "大豆沙拉油",
+    manufacturer: "恆新製油工廠",
+    batchNumber: "20260615-AX",
+    benzopyreneValue: 0.0,
+    status: "pending",
+    action: "正在檢驗中。雖無抽檢超標，但因屬問題代工廠，已實施預防性下架",
+    inspectDate: "2026-07-12",
+  },
+  {
+    id: "i12",
+    brand: "美味廚房",
+    productName: "精製調和沙拉油 (3L)",
+    type: "調和沙拉油",
+    manufacturer: "源豐生技",
+    batchNumber: "20260611-MK",
+    benzopyreneValue: 0.0,
+    status: "pending",
+    action: "正在檢驗中。已預防性下架封存，待衛生局報告出爐",
+    inspectDate: "2026-07-12",
+  }
+];
+
+export const supplyChainNodes: SupplyChainNode[] = [
+  // Raw Material Importers
+  {
+    id: "s1",
+    label: "頂順貿易 (涉案原料進口商)",
+    category: "原料進口",
+    status: "danger",
+    description: "自國外進口含超標「苯駢芘（6.8 μg/kg）」之粗製大豆油與菜籽油，為本次污染源頭。",
+    connections: ["s3", "s4"]
+  },
+  {
+    id: "s2",
+    label: "其他合規原料進口商 (如佳格、統一等)",
+    category: "原料進口",
+    status: "safe",
+    description: "自主檢驗合格，且定期出具 SGS 無有害物質殘留報告，原料安全合規。",
+    connections: ["s5", "s6"]
+  },
+  // Refining Factories
+  {
+    id: "s3",
+    label: "恆新製油工廠 (涉案代工廠)",
+    category: "精煉加工",
+    status: "danger",
+    description: "採購頂順貿易之問題粗油，未經落實進廠品管（IPQC）即進行脫色、脫臭與精煉，導致產品污染。",
+    connections: ["s7", "s8", "s9"]
+  },
+  {
+    id: "s4",
+    label: "源豐生技 (部分受波及代工廠)",
+    category: "精煉加工",
+    status: "warning",
+    description: "部分批次粗油採購自頂順，部分自其他管道。廠內部分調和油油品檢出苯駢芘微幅超標（2.7 μg/kg）。",
+    connections: ["s9", "s10"]
+  },
+  {
+    id: "s5",
+    label: "合規大廠自建精煉廠 (如義美、泰山等)",
+    category: "精煉加工",
+    status: "safe",
+    description: "採購安全原料，精煉溫度控制得當，並具備高階檢驗設備確保每批油品苯駢芘低於 0.5 μg/kg。",
+    connections: ["s11", "s12"]
+  },
+  // Brands / Packagers
+  {
+    id: "s7",
+    label: "康健食品 (受害委託品牌)",
+    category: "分裝品牌",
+    status: "danger",
+    description: "委託恆新代工之「康健黃金沙拉油 (2L)」、「純淨芥花油 (1.5L)」證實檢出超標，全面回收中。",
+    connections: ["s13", "s14"]
+  },
+  {
+    id: "s8",
+    label: "廚神牌 (受害委託品牌)",
+    category: "分裝品牌",
+    status: "danger",
+    description: "「廚神特級調和油 (3L)」檢出 5.8 μg/kg 嚴重超標。另一款「優選大豆沙拉油」檢驗雖合格，仍預防性下架。",
+    connections: ["s13", "s14", "s15"]
+  },
+  {
+    id: "s9",
+    label: "安心家 & 美味廚房 (預防性品牌)",
+    category: "分裝品牌",
+    status: "warning",
+    description: "因部分產品由恆新或源豐代工，雖檢驗報告尚未出爐，但已先將市售產品全數實施預防性下架。",
+    connections: ["s13", "s15"]
+  },
+  {
+    id: "s10",
+    label: "御品膳 (受波及品牌)",
+    category: "分裝品牌",
+    status: "danger",
+    description: "「頂級大豆沙拉油 (2.6L)」檢出 2.7 μg/kg 苯駢芘，超出限量標準，配合主管機關封存裁罰。",
+    connections: ["s13", "s14"]
+  },
+  {
+    id: "s11",
+    label: "義美、統一、得意的一天 (合規安全品牌)",
+    category: "分裝品牌",
+    status: "safe",
+    description: "原料合規、工廠自製，抽檢與自檢數值皆近乎零，經政府確認可安心購買、正常使用。",
+    connections: ["s13", "s14", "s15"]
+  },
+  // End Retail Outlets / Restaurants
+  {
+    id: "s13",
+    label: "各大超市量販店 (家樂福、全聯、大潤發)",
+    category: "下游通路",
+    status: "warning",
+    description: "接獲通知後，已全面將康健、廚神、御品膳等不合格批號油品下架，並設立特別退貨專區配合退費。",
+    connections: []
+  },
+  {
+    id: "s14",
+    label: "中小型餐飲業者、夜市攤商",
+    category: "下游通路",
+    status: "warning",
+    description: "多數採用 18L 大桶裝沙拉油。部分攤商曾進貨廚神、恆新代工油品，目前由各縣市衛生局全面稽查流向中。",
+    connections: []
+  },
+  {
+    id: "s15",
+    label: "一般家庭消費者",
+    category: "下游通路",
+    status: "safe",
+    description: "建議檢視廚房油品批號，如符合不合格清單，請立即停用並向原購買通路申請退款。",
+    connections: []
+  }
+];
+
+export const faqData = [
+  {
+    q: "什麼是苯駢芘（Benzo[a]pyrene，簡稱 BaP）？",
+    a: "苯駢芘是一種多環芳香族碳氫化合物（PAHs），屬於世界衛生組織國際癌症研究機構（IARC）認定的一級致癌物。它在食用油中形成的主要原因是：原料（如大豆、菜籽）在烘乾或粗油高溫製程中，不慎接觸到燃燒廢氣（如煙燻），或精煉（如脫臭）時溫度過高、時間過長。這類物質具有基因毒性與強烈致癌性，長期攝入會增加罹患胃癌、食道癌及肺癌的風險。"
+  },
+  {
+    q: "政府針對食用油中苯駢芘限量標準是多少？本次事件超標多嚴重？",
+    a: "根據衛福部食藥署「食品中污染物質及毒素衛生標準」規定，食用油脂（如沙拉油、芥花油、葵花油等）中，苯駢芘之限量標準為 2.0 μg/kg（微克/公斤）。本次事件中，「頂順貿易」進口的粗油檢出 6.8 μg/kg，而下游「廚神牌特級調和油」甚至檢出 5.8 μg/kg，已超出法規限量將近 3 倍，屬於嚴重的食品安全违規事件。"
+  },
+  {
+    q: "如果我不小心買到或吃到了不合格油品，該怎麼辦？",
+    a: "1. **立即停用並保存證物**：檢查家中的沙拉油，若品牌及批號在不合格名單內，請立刻停止食用，並保留油瓶與發票，前往量販店或向品牌方退貨。\n2. **多喝水與多吃高纖、高抗氧化食物**：苯駢芘主要是長期暴露風險。不慎食用短期內通常無急性症狀。您可多攝取富含維生素 C 及 E 的深色蔬菜（如花椰菜、菠菜）、水果（如芭樂、奇異果），這類抗氧化食物能加速肝臟的排毒酵素作用，並透過膳食纖維促進腸胃蠕動、幫助致癌物隨糞便排出體外。\n3. **多運動、多排汗**：維持良好的新陳代謝，補充足夠的水分，能有效強化身體自我排毒機制。"
+  },
+  {
+    q: "消費者該如何選購安全的食用油？",
+    a: "1. **選擇信譽良好的大廠**：知名大廠通常具備完善的自我品管（品保檢驗、自主溯源管理），並通過食品安全雙驗證（如 ISO 22000、HACCP、SQF 頂級認證等）。\n2. **注意產品標示與檢驗報告**：購買時注意包裝是否完好、標示是否清晰。合格大廠多會於官網定期公布第三方公正單位（如 SGS、台美等）的苯駢芘、重金屬、塑化劑抽檢報告。\n3. **定期更換油品種類**：不要長期只吃同一品牌或單一種油品。可以根據料理方式，適當搭配橄欖油、芥花油、玄米油、苦茶油或大豆沙拉油等輪流使用，不僅營養更均衡，也能有效分散單一食安問題的風險。"
+  }
+];

@@ -1,0 +1,6 @@
+{
+  "name": "致癌沙拉油事件資訊平台",
+  "description": "提供致癌沙拉油事件的最新消息、品牌檢驗數據、供應鏈流向追蹤，以及 AI 食安諮詢助手。",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
