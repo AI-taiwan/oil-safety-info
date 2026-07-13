@@ -1,4 +1,4 @@
-import { ShieldAlert, Info, HelpCircle, MapPin, MessageSquare } from "lucide-react";
+import { ShieldAlert, Info, HelpCircle, MapPin, MessageSquare, Settings } from "lucide-react";
 import { motion } from "motion/react";
 
 interface HeaderProps {

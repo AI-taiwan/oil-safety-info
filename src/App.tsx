@@ -7,7 +7,8 @@ import LocalMerchants from "./components/LocalMerchants";
 import FAQSection from "./components/FAQSection";
 import AIChatBot from "./components/AIChatBot";
 import ErrorReportModal from "./components/ErrorReportModal";
-import { ShieldCheck, Info, FileText, AlertCircle, MessageSquareWarning } from "lucide-react";
+import AdminDashboard from "./components/AdminDashboard";
+import { ShieldCheck, Info, FileText, AlertCircle, MessageSquareWarning, Settings } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
 export default function App() {
@@ -53,6 +54,7 @@ export default function App() {
             )}
             {activeTab === "faq" && <FAQSection />}
             {activeTab === "chat" && <AIChatBot />}
+            {activeTab === "admin" && <AdminDashboard />}
           </motion.div>
         </AnimatePresence>
       </main>
@@ -109,6 +111,14 @@ export default function App() {
               <FileText className="w-3.5 h-3.5 text-indigo-400" />
               <span>消費者保護處申訴</span>
             </a>
+            <button
+              onClick={() => setActiveTab("admin")}
+              className="flex items-center gap-1 hover:text-slate-200 transition-colors cursor-pointer"
+              id="footer-link-admin"
+            >
+              <Settings className="w-3.5 h-3.5 text-indigo-400" />
+              <span>系統後台登入</span>
+            </button>
             <div className="flex items-center gap-1 text-red-500 font-bold" id="footer-link-hotline">
               <AlertCircle className="w-3.5 h-3.5 animate-pulse" />
               <span>食安檢舉專線：1919</span>

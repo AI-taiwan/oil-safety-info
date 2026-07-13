@@ -38,6 +38,22 @@ export default function ErrorReportModal({ isOpen, onClose }: ErrorReportModalPr
 
     setIsSubmitting(true);
     
+    // Save to localStorage
+    const newReport = {
+      id: crypto.randomUUID(),
+      reporterName: reporterName || "熱心民眾",
+      errorType,
+      targetName,
+      description,
+      correctInfo,
+      evidenceUrl,
+      timestamp: new Date().toISOString(),
+      status: "pending"
+    };
+
+    const existingReports = JSON.parse(localStorage.getItem("errorReports") || "[]");
+    localStorage.setItem("errorReports", JSON.stringify([newReport, ...existingReports]));
+    
     // Simulate beautiful feedback transition
     setTimeout(() => {
       setIsSubmitting(false);
