@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Header from "./components/Header";
+import AdBanner from "./components/AdBanner";
 import NewsSection from "./components/NewsSection";
 import InspectionChecker from "./components/InspectionChecker";
 import SupplyChainTracker from "./components/SupplyChainTracker";
@@ -29,6 +30,9 @@ export default function App() {
       {/* Main Content Layout */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8" id="main-content">
         
+        {/* Persistent Food Safety Advertisement Banner */}
+        <AdBanner />
+
         {/* Dynamic Tab Rendering with Framer Motion Fade/Slide Transition */}
         <AnimatePresence mode="wait">
           <motion.div
