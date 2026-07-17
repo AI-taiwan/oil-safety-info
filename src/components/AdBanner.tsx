@@ -190,6 +190,14 @@ export default function AdBanner() {
     }, 2000);
   };
 
+  // Check if we should show administrative configuration buttons
+  // We show them if we are on localhost, run.app (AI Studio dev/preview environment), or if URL has ?admin=true
+  const showAdminControls = typeof window !== "undefined" && (
+    window.location.hostname.includes("localhost") || 
+    window.location.hostname.includes("run.app") || 
+    window.location.search.includes("admin=true")
+  );
+
   const handleAdSenseSave = (e: React.FormEvent) => {
     e.preventDefault();
     localStorage.setItem("adMode", adMode);
@@ -197,6 +205,24 @@ export default function AdBanner() {
     localStorage.setItem("adSenseSlotId", slotId);
     setShowAdSenseSettings(false);
   };
+
+  if (!isOpen) return null;
+
+  // Under official production domain and AdSense mode: render ONLY the pure google ad unit with no wrapper styling, no titles, and absolutely no buttons
+  if (adMode === "adsense" && !showAdminControls) {
+    return (
+      <div className="w-full flex items-center justify-center my-6" id="ad-banner-container">
+        <ins 
+          className="adsbygoogle"
+          style={{ display: "block", width: "100%", maxWidth: "1200px", minHeight: "90px" }}
+          data-ad-client={publisherId}
+          data-ad-slot={slotId}
+          data-ad-format="auto"
+          data-full-width-responsive="true"
+        />
+      </div>
+    );
+  }
 
   return (
     <div 
@@ -211,14 +237,16 @@ export default function AdBanner() {
       {/* Decorative Grid Mesh overlay */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px] pointer-events-none opacity-20" />
 
-      {/* Dismiss button */}
-      <button 
-        onClick={() => setIsOpen(false)}
-        className="absolute top-4 right-4 p-1.5 text-slate-500 hover:text-slate-300 hover:bg-slate-800/40 rounded-lg transition-all z-10 cursor-pointer"
-        title="隱藏推廣廣告"
-      >
-        <X className="w-4 h-4" />
-      </button>
+      {/* Dismiss button - only visible under admin settings */}
+      {showAdminControls && (
+        <button 
+          onClick={() => setIsOpen(false)}
+          className="absolute top-4 right-4 p-1.5 text-slate-500 hover:text-slate-300 hover:bg-slate-800/40 rounded-lg transition-all z-10 cursor-pointer"
+          title="隱藏推廣廣告"
+        >
+          <X className="w-4 h-4" />
+        </button>
+      )}
 
       {/* AdSense Mode View */}
       {adMode === "adsense" ? (
@@ -227,7 +255,7 @@ export default function AdBanner() {
             <div className="flex flex-wrap items-center gap-3">
               <div className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20 text-[10px] font-extrabold uppercase tracking-wider">
                 <AlertTriangle className="w-3.5 h-3.5" />
-                <span>Google AdSense 聯播網廣告模式</span>
+                <span>Google AdSense 聯播網廣告模式 (開發管理預覽)</span>
               </div>
               <span className="px-2.5 py-1 bg-slate-900/80 border border-slate-800/60 rounded text-[10px] font-mono text-slate-400">
                 {publisherId}
@@ -240,7 +268,7 @@ export default function AdBanner() {
                 <span>Google 實體廣告單元 (已嵌入測試)</span>
               </h4>
               <p className="text-xs sm:text-sm text-slate-300/90 leading-relaxed max-w-4xl">
-                當前頁面已動態載入 Google 廣告腳本，並部署了指定發佈商的廣告容器。如果您在本地開發或未認證網域時看到空白區域，此為 Google 的安全驗證機制，一旦在認證網域 (heiban.pixnet.net) 上部署後，廣告將立即正常渲染並開始賺取收益！
+                當前頁面已動態載入 Google 廣告腳本，並部署了指定發佈商的廣告容器。如果您在本地開發或未認證網域時看到空白區域，此為 Google 的安全驗證機制，一旦在認證網域 (oil-safety-info.vercel.app) 上部署後，廣告將立即正常渲染並開始賺取收益！
               </p>
             </div>
 
@@ -256,15 +284,17 @@ export default function AdBanner() {
               />
             </div>
 
-            <div className="flex flex-wrap items-center gap-3 pt-2">
-              <button 
-                onClick={() => setShowAdSenseSettings(true)}
-                className="inline-flex items-center gap-1.5 px-4 py-2 bg-indigo-600/80 hover:bg-indigo-600 text-white rounded-xl text-xs sm:text-sm font-black transition-all hover:scale-105"
-              >
-                <Settings className="w-4 h-4" />
-                <span>配置或切換廣告來源</span>
-              </button>
-            </div>
+            {showAdminControls && (
+              <div className="flex flex-wrap items-center gap-3 pt-2">
+                <button 
+                  onClick={() => setShowAdSenseSettings(true)}
+                  className="inline-flex items-center gap-1.5 px-4 py-2 bg-indigo-600/80 hover:bg-indigo-600 text-white rounded-xl text-xs sm:text-sm font-black transition-all hover:scale-105"
+                >
+                  <Settings className="w-4 h-4" />
+                  <span>配置或切換廣告來源</span>
+                </button>
+              </div>
+            )}
           </div>
         </div>
       ) : (
@@ -320,22 +350,26 @@ export default function AdBanner() {
                 <ExternalLink className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
               </a>
 
-              <button 
-                onClick={() => setShowSubmitModal(true)}
-                className="inline-flex items-center gap-1.5 px-4 py-2 bg-slate-900/80 hover:bg-slate-800 text-slate-300 hover:text-white rounded-xl text-xs sm:text-sm font-bold border border-slate-700/60 transition-all cursor-pointer"
-              >
-                <PlusCircle className="w-4 h-4 text-indigo-400" />
-                <span>我也想刊登廣告</span>
-              </button>
+              {showAdminControls && (
+                <>
+                  <button 
+                    onClick={() => setShowSubmitModal(true)}
+                    className="inline-flex items-center gap-1.5 px-4 py-2 bg-slate-900/80 hover:bg-slate-800 text-slate-300 hover:text-white rounded-xl text-xs sm:text-sm font-bold border border-slate-700/60 transition-all cursor-pointer"
+                  >
+                    <PlusCircle className="w-4 h-4 text-indigo-400" />
+                    <span>我也想刊登廣告</span>
+                  </button>
 
-              <button 
-                onClick={() => setShowAdSenseSettings(true)}
-                className="inline-flex items-center gap-1.5 px-4 py-2 bg-slate-950/40 hover:bg-slate-900 text-slate-400 hover:text-slate-200 rounded-xl text-xs sm:text-sm font-bold border border-slate-800/60 transition-all cursor-pointer"
-                title="切換成 Google AdSense 實體廣告"
-              >
-                <Settings className="w-4 h-4 text-slate-400" />
-                <span>Google AdSense 設置</span>
-              </button>
+                  <button 
+                    onClick={() => setShowAdSenseSettings(true)}
+                    className="inline-flex items-center gap-1.5 px-4 py-2 bg-slate-950/40 hover:bg-slate-900 text-slate-400 hover:text-slate-200 rounded-xl text-xs sm:text-sm font-bold border border-slate-800/60 transition-all cursor-pointer"
+                    title="切換成 Google AdSense 實體廣告"
+                  >
+                    <Settings className="w-4 h-4 text-slate-400" />
+                    <span>Google AdSense 設置</span>
+                  </button>
+                </>
+              )}
             </div>
 
           </div>
