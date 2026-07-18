@@ -10,11 +10,15 @@ export default function NewsSection() {
 
   useEffect(() => {
     // Load custom news from localStorage and merge with hardcoded initialNewsData
-    const data = localStorage.getItem("customNews");
-    if (data) {
-      const parsedCustomNews: NewsItem[] = JSON.parse(data);
-      // Combine custom news (at top) with initial news
-      setNewsList([...parsedCustomNews, ...initialNewsData]);
+    try {
+      const data = window.localStorage?.getItem("customNews");
+      if (data) {
+        const parsedCustomNews: NewsItem[] = JSON.parse(data);
+        // Combine custom news (at top) with initial news
+        setNewsList([...parsedCustomNews, ...initialNewsData]);
+      }
+    } catch (e) {
+      console.warn("Could not load custom news", e);
     }
   }, []);
 

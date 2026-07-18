@@ -51,8 +51,8 @@ export default function ErrorReportModal({ isOpen, onClose }: ErrorReportModalPr
       status: "pending"
     };
 
-    const existingReports = JSON.parse(localStorage.getItem("errorReports") || "[]");
-    localStorage.setItem("errorReports", JSON.stringify([newReport, ...existingReports]));
+    const existingReports = JSON.parse(window.localStorage?.getItem("errorReports") || "[]");
+    window.localStorage?.setItem("errorReports", JSON.stringify([newReport, ...existingReports]));
     
     // Simulate beautiful feedback transition
     setTimeout(() => {

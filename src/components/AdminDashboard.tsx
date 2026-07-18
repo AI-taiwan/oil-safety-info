@@ -49,14 +49,14 @@ export default function AdminDashboard() {
   };
 
   const loadReports = () => {
-    const data = localStorage.getItem("errorReports");
+    const data = window.localStorage?.getItem("errorReports");
     if (data) {
       setReports(JSON.parse(data));
     }
   };
 
   const loadNews = () => {
-    const data = localStorage.getItem("customNews");
+    const data = window.localStorage?.getItem("customNews");
     if (data) {
       setCustomNews(JSON.parse(data));
     }
@@ -73,21 +73,21 @@ export default function AdminDashboard() {
       report.id === id ? { ...report, status: newStatus } : report
     );
     setReports(updatedReports);
-    localStorage.setItem("errorReports", JSON.stringify(updatedReports));
+    window.localStorage?.setItem("errorReports", JSON.stringify(updatedReports));
   };
 
   const handleDelete = (id: string) => {
     if (window.confirm("確定要刪除這筆通報紀錄嗎？")) {
       const updatedReports = reports.filter(report => report.id !== id);
       setReports(updatedReports);
-      localStorage.setItem("errorReports", JSON.stringify(updatedReports));
+      window.localStorage?.setItem("errorReports", JSON.stringify(updatedReports));
     }
   };
 
   const clearAllReports = () => {
     if (window.confirm("確定要清空所有通報紀錄嗎？此操作無法還原。")) {
       setReports([]);
-      localStorage.removeItem("errorReports");
+      window.localStorage?.removeItem("errorReports");
     }
   };
 
@@ -114,7 +114,7 @@ export default function AdminDashboard() {
 
     const updatedNews = [item, ...customNews];
     setCustomNews(updatedNews);
-    localStorage.setItem("customNews", JSON.stringify(updatedNews));
+    window.localStorage?.setItem("customNews", JSON.stringify(updatedNews));
     
     // Reset form
     setNewNews({
@@ -131,7 +131,7 @@ export default function AdminDashboard() {
     if (window.confirm("確定要刪除這則公告嗎？")) {
       const updatedNews = customNews.filter(n => n.id !== id);
       setCustomNews(updatedNews);
-      localStorage.setItem("customNews", JSON.stringify(updatedNews));
+      window.localStorage?.setItem("customNews", JSON.stringify(updatedNews));
     }
   };
 

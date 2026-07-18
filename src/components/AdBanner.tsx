@@ -67,13 +67,25 @@ export default function AdBanner() {
 
   // AdSense Integration States
   const [adMode, setAdMode] = useState<"platform" | "adsense">(() => {
-    return (localStorage.getItem("adMode") as "platform" | "adsense") || "platform";
+    try {
+      return (window.localStorage?.getItem("adMode") as "platform" | "adsense") || "platform";
+    } catch {
+      return "platform";
+    }
   });
   const [publisherId, setPublisherId] = useState(() => {
-    return localStorage.getItem("adSensePublisherId") || "ca-pub-2699349243934030";
+    try {
+      return window.localStorage?.getItem("adSensePublisherId") || "ca-pub-2699349243934030";
+    } catch {
+      return "ca-pub-2699349243934030";
+    }
   });
   const [slotId, setSlotId] = useState(() => {
-    return localStorage.getItem("adSenseSlotId") || "9876543210";
+    try {
+      return window.localStorage?.getItem("adSenseSlotId") || "9876543210";
+    } catch {
+      return "9876543210";
+    }
   });
 
   // Form State for renting ad slots
@@ -85,7 +97,7 @@ export default function AdBanner() {
 
   // Load custom ads from localStorage
   useEffect(() => {
-    const saved = localStorage.getItem("customAds");
+    const saved = window.localStorage?.getItem("customAds");
     if (saved) {
       try {
         const parsed: AdItem[] = JSON.parse(saved);
@@ -105,9 +117,17 @@ export default function AdBanner() {
     return () => clearInterval(interval);
   }, [isPlaying, ads.length, adMode]);
 
+  // Check if we should show administrative configuration buttons
+  // We show them if we are on localhost, run.app (AI Studio dev/preview environment), or if URL has ?admin=true
+  const showAdminControls = typeof window !== "undefined" && (
+    window.location.hostname.includes("localhost") || 
+    window.location.hostname.includes("run.app") || 
+    window.location.search.includes("admin=true")
+  );
+
   // Dynamically Load Google AdSense Script tag
   useEffect(() => {
-    if (adMode === "adsense") {
+    if (adMode === "adsense" || !showAdminControls) {
       const scriptId = "google-adsense-script";
       let script = document.getElementById(scriptId) as HTMLScriptElement | null;
       if (!script) {
@@ -127,7 +147,7 @@ export default function AdBanner() {
         console.warn("Google AdSense adsbygoogle pushes are queued successfully, pending domain verification.");
       }
     }
-  }, [adMode, publisherId, slotId]);
+  }, [adMode, publisherId, slotId, showAdminControls]);
 
   if (!isOpen) return null;
 
@@ -174,7 +194,7 @@ export default function AdBanner() {
     
     // Save to local storage (only keep custom ones)
     const customOnly = updatedAds.filter(a => a.isCustom);
-    localStorage.setItem("customAds", JSON.stringify(customOnly));
+    window.localStorage?.setItem("customAds", JSON.stringify(customOnly));
 
     // Jump to the newly added ad
     setCurrentIndex(updatedAds.length - 1);
@@ -190,36 +210,34 @@ export default function AdBanner() {
     }, 2000);
   };
 
-  // Check if we should show administrative configuration buttons
-  // We show them if we are on localhost, run.app (AI Studio dev/preview environment), or if URL has ?admin=true
-  const showAdminControls = typeof window !== "undefined" && (
-    window.location.hostname.includes("localhost") || 
-    window.location.hostname.includes("run.app") || 
-    window.location.search.includes("admin=true")
-  );
-
   const handleAdSenseSave = (e: React.FormEvent) => {
     e.preventDefault();
-    localStorage.setItem("adMode", adMode);
-    localStorage.setItem("adSensePublisherId", publisherId);
-    localStorage.setItem("adSenseSlotId", slotId);
+    try {
+      window.localStorage?.setItem("adMode", adMode);
+      window.localStorage?.setItem("adSensePublisherId", publisherId);
+      window.localStorage?.setItem("adSenseSlotId", slotId);
+    } catch {}
     setShowAdSenseSettings(false);
   };
 
   if (!isOpen) return null;
 
-  // Under official production domain and AdSense mode: render ONLY the pure google ad unit with no wrapper styling, no titles, and absolutely no buttons
-  if (adMode === "adsense" && !showAdminControls) {
+  // For regular visitors on the production site (where showAdminControls is false),
+  // we force-render ONLY the pure Google AdSense ad unit.
+  // This guarantees that absolutely no carousel, no settings, and no buttons of any kind will be visible to regular users.
+  if (!showAdminControls) {
     return (
       <div className="w-full flex items-center justify-center my-6" id="ad-banner-container">
-        <ins 
-          className="adsbygoogle"
-          style={{ display: "block", width: "100%", maxWidth: "1200px", minHeight: "90px" }}
-          data-ad-client={publisherId}
-          data-ad-slot={slotId}
-          data-ad-format="auto"
-          data-full-width-responsive="true"
-        />
+        <div className="w-full max-w-sm">
+          <ins 
+            className="adsbygoogle"
+            style={{ display: "block", minHeight: "250px" }}
+            data-ad-client={publisherId}
+            data-ad-slot={slotId}
+            data-ad-format="auto"
+            data-full-width-responsive="true"
+          />
+        </div>
       </div>
     );
   }
@@ -273,15 +291,17 @@ export default function AdBanner() {
             </div>
 
             {/* Google AdSense HTML Insertion */}
-            <div className="bg-slate-950/60 rounded-xl border border-dashed border-slate-800 p-4 overflow-hidden flex items-center justify-center min-h-[120px]">
-              <ins 
-                className="adsbygoogle"
-                style={{ display: "block", minWidth: "250px", height: "90px" }}
-                data-ad-client={publisherId}
-                data-ad-slot={slotId}
-                data-ad-format="auto"
-                data-full-width-responsive="true"
-              />
+            <div className="bg-slate-950/60 rounded-xl border border-dashed border-slate-800 p-4 overflow-hidden flex items-center justify-center min-h-[250px]">
+              <div className="w-full max-w-sm">
+                <ins 
+                  className="adsbygoogle"
+                  style={{ display: "block", minHeight: "250px" }}
+                  data-ad-client={publisherId}
+                  data-ad-slot={slotId}
+                  data-ad-format="auto"
+                  data-full-width-responsive="true"
+                />
+              </div>
             </div>
 
             {showAdminControls && (
